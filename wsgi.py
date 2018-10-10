@@ -18,13 +18,13 @@ def index():
 def get_graph_data():
     time_scale = request.form.get("time_scale", "month")
     if time_scale == "month":
-        min_date = datetime.now() - timedelta(days=30)
+        min_date = datetime.now() - timedelta(days=48)
     elif time_scale == "week":
-        min_date = datetime.now() - timedelta(days=7)
+        min_date = datetime.now() - timedelta(days=25)
     elif time_scale == "3_days":
-        min_date = datetime.now() - timedelta(days=3)
+        min_date = datetime.now() - timedelta(days=21)
     else:
-        min_date = datetime.now() - timedelta(days=1)
+        min_date = datetime.now() - timedelta(days=19)
     data = get_template_data(min_date)
     data = {"time_scale": json.dumps(data)}
     data = jsonify(data)
