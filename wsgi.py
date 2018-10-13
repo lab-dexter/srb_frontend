@@ -42,7 +42,7 @@ def send_ota(path):
 
 def get_ra_template_data(date=None):
     templateData = {}
-    templateData['config'] = config
+    templateData['ra_config'] = ra_config
     user = "remote-admin"
     passwd = "Some-pass!23"
     dbhost = os.environ["MYSQL_SERVICE_HOST"]

@@ -32,7 +32,7 @@
     g = new Dygraph(
     document.getElementById("dychart-chart"),
     [{% for i in busyness_data %}
-	    [new Date("{{ i }}"),{% for j in config['floors'][4] %}{{ busyness_data[i][j]['distance'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
+	    [new Date("{{ i }}"),{% for j in config['floors'][4] %}{{ busyness_data[i][j]['data'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
     ],
 	{
 		labels: ["data", {% for i in config['floors'][4] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
@@ -45,7 +45,7 @@
 		xlabel: 'Time',
 		digitsAfterDecimal: 2,
 		showRangeSelector: true,
-		rangeSelectorHeight: 30,
+		rangeSelectorHeight: 10,
 		visibility:[true,true,true,true]
 	}
 );
@@ -73,7 +73,7 @@
 		buttonpressed=""
 		e.preventDefault();
 		$.ajax({
-		  url: 'http://flask-app-dexter-lab.e4ff.pro-eu-west-1.openshiftapps.com:80/date/',
+		  url: 'http://flask-app-dexter-lab.e4ff.pro-eu-west-1.openshiftapps.com:80/ra/date/',
 		  data: {'time_scale': value},
 		  method: 'POST',
 		  success: function(data) {
@@ -99,7 +99,7 @@
 		        legend: 'always',
 		        axisLabelWidth: 30,
 		        fillGraph: false,
-		        ylabel: 'Distance (cm)',
+		        ylabel: 'Busyness (1 - busy, 0 - free)',
 		        xlabel: 'Time',
 		        digitsAfterDecimal: 2,
 		        showRangeSelector: true,
