@@ -32,10 +32,10 @@
     g = new Dygraph(
     document.getElementById("dychart-chart"),
     [{% for i in busyness_data %}
-	    [new Date("{{ i }}"),{% for j in config['floors'][4] %}{{ busyness_data[i][j]['data'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
+	    [new Date("{{ i }}"),{% for j in ra_config['floors'][4] %}{{ busyness_data[i][j]['data'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
     ],
 	{
-		labels: ["data", {% for i in config['floors'][4] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
+		labels: ["data", {% for i in ra_config['floors'][4] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
 		rollPeriod: 1,
 		showRoller: true,
 		legend: 'always',
@@ -83,12 +83,12 @@
 			var labels = ['data'];
 			for (i in obj.busyness_data) {
                 var tempList = [new Date(i)];
-				for (j in obj.config['floors'][4]) {
+				for (j in obj.ra_config['floors'][4]) {
 				    tempList.push(obj.busyness_data[i][j]['data']);
 				}
 				dataList.push(tempList);
             }
-			for (i in obj.config['floors'][4]) {
+			for (i in obj.ra_config['floors'][4]) {
 				labels.push(i);
 			}
 			var divField = document.getElementById("dychart-chart");
@@ -109,7 +109,7 @@
 			console.log('xxx xxx xxx');
 			console.log(' ', divField, dataList, parameters);
 			console.log('xxx xxx xxx');
-			console.log('value: ' + value, 'config: ' + obj.config.toString(), 'busyness_data' + obj.busyness_data.toString());
+			console.log('value: ' + value, 'ra_config: ' + obj.ra_config.toString(), 'busyness_data' + obj.busyness_data.toString());
 			console.log('pirma g');
             console.log(' ', g.toString());
 			g = new Dygraph(divField, dataList, parameters);
