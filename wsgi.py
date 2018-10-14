@@ -55,9 +55,9 @@ def get_ra_template_data(date=None):
     else:
         mysql_string = "SELECT * FROM `sensor_data` WHERE timestamp > '{}' ORDER BY timestamp DESC".format(date)
     cur.execute(mysql_string)
-    data = cur.fetchall()
+    dbdata = cur.fetchall()
     parsed_data = OrderedDict()
-    for (id, mac_id, distance, datetime_object) in data:
+    for (id, mac_id, data, datetime_object) in dbdata:
         date_time = datetime_object.strftime("%Y-%m-%d %H:%M:%S")
         if date_time in parsed_data:
             parsed_data[date_time].update({ mac_id: { "busyness": data }})
