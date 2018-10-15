@@ -65,8 +65,7 @@ def get_ra_template_data(date=None):
             parsed_data.update({ date_time: { mac_id: { "data": data }}})
     filtered_data = OrderedDict()
     for i in parsed_data:
-        print (parsed_data[i], " ", len(parsed_data[i]))
-        if len(parsed_data[i]) == 4:
+        if len(parsed_data[i]) == 1:
             filtered_data.update({i: parsed_data[i]})
     templateData['busyness_data'] = OrderedDict(sorted( filtered_data.items()))
     return templateData

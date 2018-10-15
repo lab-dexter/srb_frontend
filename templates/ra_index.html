@@ -8,13 +8,12 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
 	<div><p>config -> {{ra_config }}</p></div>
-	<div><p> data -> {{busyness_data[1]}}</p></div>
 	<div>dygraphs grafikas:</div>
 	<div id="dychart-chart" style="width:900px; height:500px;"></div>
 	<p><b>Rodyti:</b></p>
     <div>
       <input type="checkbox" id="0" checked="" onclick="change(this)">
-      <label for="0">b8:27:eb:54:2c:38_1</label>
+      <label for="0">b8:27:eb:54:2c:38</label>
       <input type="checkbox" id="1" checked="" onclick="change(this)">
       <label for="1">ec:fa:bc:e:a6:95_2</label>
       <input type="checkbox" id="2" checked="" onclick="change(this)">
@@ -46,7 +45,7 @@
 		xlabel: 'Time',
 		digitsAfterDecimal: 2,
 		showRangeSelector: true,
-		rangeSelectorHeight: 10,
+		rangeSelectorHeight: 30,
 		visibility:[true,true,true,true]
 	}
 );
