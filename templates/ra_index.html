@@ -8,7 +8,7 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
 	<div><p>config -> {{ra_config }}</p></div>
-	<div><p> data -> {{busyness_data}}</p></div>
+	<div><p> data -> {{busyness_data[1]}}</p></div>
 	<div>dygraphs grafikas:</div>
 	<div id="dychart-chart" style="width:900px; height:500px;"></div>
 	<p><b>Rodyti:</b></p>
@@ -33,10 +33,10 @@
     g = new Dygraph(
     document.getElementById("dychart-chart"),
     [{% for i in busyness_data %}
-	    [new Date("{{ i }}"),{% for j in ra_config['floors'][1] %}{{ busyness_data[i][j]['data'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
+	    [new Date("{{ i }}"),{% for j in ra_config['floors'][4] %}{{ busyness_data[i][j]['data'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
     ],
 	{
-		labels: ["data", {% for i in ra_config['floors'][1] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
+		labels: ["data", {% for i in ra_config['floors'][4] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
 		rollPeriod: 1,
 		showRoller: true,
 		legend: 'always',
@@ -63,7 +63,7 @@
 	  return true
 	}
 	</script>
-	<script>
+	<!--<script>
 	$(function() {
       var buttonpressed;
       $('.submitbutton').click(function() {
@@ -118,6 +118,6 @@
 		});
 	  });
 	});
-	</script>
+	</script>-->
 	</body>
 </html>
