@@ -8,7 +8,7 @@ import json
 
 application = Flask(__name__)
 config = { "floors": {4: { "ec:fa:bc:e:a6:95_1": "general" , "ec:fa:bc:e:a6:95_2": "general", "ec:fa:bc:e:a6:95_3": "glass", "ec:fa:bc:e:a6:95_4": "paper" }}}
-ra_config = { "floors": {4: { "b8:27:eb:54:2c:38_1": "general" , "ec:fa:bc:e:a6:95_2": "general", "ec:fa:bc:e:a6:95_3": "glass", "ec:fa:bc:e:a6:95_4": "paper" }}}
+ra_config = { "floors": {4: { "b8:27:eb:54:2c:38_1": "general" }}}
 
 @application.route("/")
 def index():	
