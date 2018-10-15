@@ -59,17 +59,16 @@ def get_ra_template_data(date=None):
     parsed_data = OrderedDict()
     for (id, mac_id, data, datetime_object) in dbdata:
         date_time = datetime_object.strftime("%Y-%m-%d %H:%M:%S")
-        print (date_time)
         if date_time in parsed_data:
             parsed_data[date_time].update({ mac_id: { "data": data }})
         else:
             parsed_data.update({ date_time: { mac_id: { "data": data }}})
-        print (parsed_data[date_time])
     filtered_data = OrderedDict()
     for i in parsed_data:
+        print (parsed_data[i])
         if len(parsed_data[i]) == 4:
             filtered_data.update({i: parsed_data[i]})
-    templateData['busyness_data'] = OrderedDict(sorted(filtered_data.items()))
+    templateData['busyness_data'] = OrderedDict(sorted(parsed_data.items()))
     return templateData
 
 def get_template_data(date=None):
