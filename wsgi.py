@@ -8,7 +8,7 @@ import json
 
 application = Flask(__name__)
 config = { "floors": {4: { "ec:fa:bc:e:a6:95_1": "general" , "ec:fa:bc:e:a6:95_2": "general", "ec:fa:bc:e:a6:95_3": "glass", "ec:fa:bc:e:a6:95_4": "paper" }}}
-ra_config = { "floors": {4: { "b8:27:eb:54:2c:38_1": "general" }}}
+ra_config = { "floors": {4: { "b8:27:eb:54:2c:38": "general" }}}
 
 @application.route("/")
 def index():	
@@ -66,7 +66,7 @@ def get_ra_template_data(date=None):
     filtered_data = OrderedDict()
     for i in parsed_data:
         print (parsed_data[i], " ", len(parsed_data[i]))
-        if len(parsed_data[i]) == 1:
+        if len(parsed_data[i]) == 4:
             filtered_data.update({i: parsed_data[i]})
     templateData['busyness_data'] = OrderedDict(sorted( filtered_data.items()))
     return templateData
