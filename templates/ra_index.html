@@ -33,10 +33,10 @@
     g = new Dygraph(
     document.getElementById("dychart-chart"),
     [{% for i in busyness_data %}
-	    [new Date("{{ i }}"),{% for j in ra_config['floors'][4] %}{{ busyness_data[i][j]['data'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
+	    [new Date("{{ i }}"),{% for j in ra_config['floors'][1] %}{{ busyness_data[i][j]['data'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
     ],
 	{
-		labels: ["data", {% for i in ra_config['floors'][4] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
+		labels: ["data", {% for i in ra_config['floors'][1] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
 		rollPeriod: 1,
 		showRoller: true,
 		legend: 'always',
