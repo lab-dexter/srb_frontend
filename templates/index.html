@@ -1,122 +1,121 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Smart recycling bins data</title>
-    </head>
-    <body>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
-	<div><p>config -> {{config }}</p></div>
-	<div>dygraphs grafikas:</div>
-	<div id="dychart-chart" style="width:900px; height:500px;"></div>
-	<p><b>Rodyti:</b></p>
-    <div>
-      <input type="checkbox" id="0" checked="" onclick="change(this)">
-      <label for="0">ec:fa:bc:e:a6:95_1</label>
-      <input type="checkbox" id="1" checked="" onclick="change(this)">
-      <label for="1">ec:fa:bc:e:a6:95_2</label>
-      <input type="checkbox" id="2" checked="" onclick="change(this)">
-      <label for="2">ec:fa:bc:e:a6:95_3</label>
-	  <input type="checkbox" id="3" checked="" onclick="change(this)">
-      <label for="3">ec:fa:bc:e:a6:95_4</label>
-    </div>
-	<div>
-	<h1>Date Calculator</h1>
-	<form method="post" id="form">
-	<button value="month" class="submitbutton" type="submit">Month</button><button value="week" type="submit" class="submitbutton">Week</button><button value="3_days" type="submit" class="submitbutton">3 days</button><button value="1_day" type="submit" class="submitbutton">1 day</button>
-    </form>
-	<p id="test"></p>
-	</div>
-	<script>
-    g = new Dygraph(
-    document.getElementById("dychart-chart"),
-    [{% for i in distance_data %}
-	    [new Date("{{ i }}"),{% for j in config['floors'][4] %}{{ distance_data[i][j]['distance'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
-    ],
-	{
-		labels: ["data", {% for i in config['floors'][4] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
-		rollPeriod: 1,
-		showRoller: true,
-		legend: 'always',
-		axisLabelWidth: 30,
-		fillGraph: false,
-		ylabel: 'Distance (cm)',
-		xlabel: 'Time',
-		digitsAfterDecimal: 2,
-		showRangeSelector: true,
-		rangeSelectorHeight: 30,
-		visibility:[true,true,true,true]
-	}
-);
-    setStatus();
-    function setStatus() {
-      document.getElementById("visibility").innerHTML = g.visibility().toString();
-    }
- 
-    function change(el) {
-      g.setVisibility(parseInt(el.id), el.checked);
-      setStatus();
-    }
-	function set_period(period) {
-	  return true
-	}
-	</script>
-	<script>
-	$(function() {
-      var buttonpressed;
-      $('.submitbutton').click(function() {
-        buttonpressed = $(this).attr('value')
-       })
-	  $('#form').on('submit', function(e){
-		var value = buttonpressed;
-		buttonpressed=""
-		e.preventDefault();
-		$.ajax({
-		  url: 'http://flask-app-dexter-lab.e4ff.pro-eu-west-1.openshiftapps.com:80/date/',
-		  data: {'time_scale': value},
-		  method: 'POST',
-		  success: function(data) {
-			$('#value').val('');
-			var obj = JSON.parse(data['time_scale']);
-			var dataList = [];
-			var labels = ['data'];
-			for (i in obj.distance_data) {
-                var tempList = [new Date(i)];
-				for (j in obj.config['floors'][4]) {
-				    tempList.push(obj.distance_data[i][j]['distance']);
-				}
-				dataList.push(tempList);
-            }
-			for (i in obj.config['floors'][4]) {
-				labels.push(i);
+{% extends "base.html" %}
+{% block title %}Smart recycling bins data{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
+<div><p>config -> {{config }}</p></div>
+<div>dygraphs grafikas:</div>
+<div id="dychart-chart" style="width:900px; height:500px;"></div>
+<p><b>Rodyti:</b></p>
+<div>
+  <input type="checkbox" id="0" checked="" onclick="change(this)">
+  <label for="0">ec:fa:bc:e:a6:95_1</label>
+  <input type="checkbox" id="1" checked="" onclick="change(this)">
+  <label for="1">ec:fa:bc:e:a6:95_2</label>
+  <input type="checkbox" id="2" checked="" onclick="change(this)">
+  <label for="2">ec:fa:bc:e:a6:95_3</label>
+  <input type="checkbox" id="3" checked="" onclick="change(this)">
+  <label for="3">ec:fa:bc:e:a6:95_4</label>
+</div>
+<div>
+<h1>Date Calculator</h1>
+<form method="post" id="form">
+<button value="month" class="submitbutton" type="submit">Month</button><button value="week" type="submit" class="submitbutton">Week</button><button value="3_days" type="submit" class="submitbutton">3 days</button><button value="1_day" type="submit" class="submitbutton">1 day</button>
+</form>
+<p id="test"></p>
+</div>
+<script>
+g = new Dygraph(
+document.getElementById("dychart-chart"),
+[{% for i in distance_data %}
+    [new Date("{{ i }}"),{% for j in config['floors'][4] %}{{ distance_data[i][j]['distance'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
+],
+{
+	labels: ["data", {% for i in config['floors'][4] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
+	rollPeriod: 1,
+	showRoller: true,
+	legend: 'always',
+	axisLabelWidth: 30,
+	fillGraph: false,
+	ylabel: 'Distance (cm)',
+	xlabel: 'Time',
+	digitsAfterDecimal: 2,
+	showRangeSelector: true,
+	rangeSelectorHeight: 30,
+	visibility:[true,true,true,true]
+}
+
+setStatus();
+function setStatus() {
+  document.getElementById("visibility").innerHTML = g.visibility().toString();
+}
+
+function change(el) {
+  g.setVisibility(parseInt(el.id), el.checked);
+  setStatus();
+}
+function set_period(period) {
+  return true
+}
+</script>
+<script>
+$(function() {
+  var buttonpressed;
+  $('.submitbutton').click(function() {
+    buttonpressed = $(this).attr('value')
+   })
+  $('#form').on('submit', function(e){
+	var value = buttonpressed;
+	buttonpressed=""
+	e.preventDefault();
+	$.ajax({
+	  url: 'http://flask-app-dexter-lab.e4ff.pro-eu-west-1.openshiftapps.com:80/date/',
+	  data: {'time_scale': value},
+	  method: 'POST',
+	  success: function(data) {
+		$('#value').val('');
+		var obj = JSON.parse(data['time_scale']);
+		var dataList = [];
+		var labels = ['data'];
+		for (i in obj.distance_data) {
+            var tempList = [new Date(i)];
+			for (j in obj.config['floors'][4]) {
+			    tempList.push(obj.distance_data[i][j]['distance']);
 			}
-			var divField = document.getElementById("dychart-chart");
-			var parameters = {
-		        labels: labels,
-		        rollPeriod: 1,
-		        showRoller: true,
-		        legend: 'always',
-		        axisLabelWidth: 30,
-		        fillGraph: false,
-		        ylabel: 'Distance (cm)',
-		        xlabel: 'Time',
-		        digitsAfterDecimal: 2,
-		        showRangeSelector: true,
-		        rangeSelectorHeight: 30,
-		        visibility:[true,true,true,true]
-	        }
-			console.log('xxx xxx xxx');
-			console.log(' ', divField, dataList, parameters);
-			console.log('xxx xxx xxx');
-			console.log('value: ' + value, 'config: ' + obj.config.toString(), 'distance_data' + obj.distance_data.toString());
-			console.log('pirma g');
-            console.log(' ', g.toString());
-			g = new Dygraph(divField, dataList, parameters);
-		  }
-		});
-	  });
+			dataList.push(tempList);
+        }
+		for (i in obj.config['floors'][4]) {
+			labels.push(i);
+		}
+		var divField = document.getElementById("dychart-chart");
+		var parameters = {
+	        labels: labels,
+	        rollPeriod: 1,
+	        showRoller: true,
+	        legend: 'always',
+	        axisLabelWidth: 30,
+	        fillGraph: false,
+	        ylabel: 'Distance (cm)',
+	        xlabel: 'Time',
+	        digitsAfterDecimal: 2,
+	        showRangeSelector: true,
+	        rangeSelectorHeight: 30,
+	        visibility:[true,true,true,true]
+        }
+		console.log('xxx xxx xxx');
+		console.log(' ', divField, dataList, parameters);
+		console.log('xxx xxx xxx');
+		console.log('value: ' + value, 'config: ' + obj.config.toString(), 'distance_data' + obj.distance_data.toString());
+		console.log('pirma g');
+        console.log(' ', g.toString());
+		g = new Dygraph(divField, dataList, parameters);
+	  }
 	});
-	</script>
-	</body>
-</html>
+  });
+});
+</script>
+{% endblock %}
