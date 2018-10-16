@@ -2,11 +2,11 @@
 {% block title %}Smart recycling bins data{% endblock %}
 {% block head %}
   {{ super() }}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
 {% endblock %}
 {% block content %}
-<script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
 <div><p>config -> {{config }}</p></div>
 <div>dygraphs grafikas:</div>
 <div id="dychart-chart" style="width:900px; height:500px;"></div>
