@@ -38,16 +38,17 @@
 		labels: ["data", {% for i in ra_config['floors'][4] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
 		rollPeriod: 1,
 		stepPlot: true,
+		fillGraph: true,
 		showRoller: true,
 		legend: 'always',
-		axisLabelWidth: 30,
+		axisLabelWidth: 60,
 		fillGraph: true,
 		ylabel: 'Busyness: 1 - busy',
 		xlabel: 'Time',
-		digitsAfterDecimal: 0,
+		digitsAfterDecimal: 1,
 		showRangeSelector: true,
 		rangeSelectorHeight: 30,
-		visibility:[true,true,true,true]
+		visibility:[true]
 	}
 );
     setStatus();
