@@ -14,12 +14,12 @@
     <div>
       <input type="checkbox" id="0" checked="" onclick="change(this)">
       <label for="0">b8:27:eb:54:2c:38</label>
-      <input type="checkbox" id="1" checked="" onclick="change(this)">
+     <!-- <input type="checkbox" id="1" checked="" onclick="change(this)">
       <label for="1">ec:fa:bc:e:a6:95_2</label>
       <input type="checkbox" id="2" checked="" onclick="change(this)">
       <label for="2">ec:fa:bc:e:a6:95_3</label>
 	  <input type="checkbox" id="3" checked="" onclick="change(this)">
-      <label for="3">ec:fa:bc:e:a6:95_4</label>
+      <label for="3">ec:fa:bc:e:a6:95_4</label> -->
     </div>
 	<div>
 	<h1>Date Calculator</h1>
@@ -37,13 +37,14 @@
 	{
 		labels: ["data", {% for i in ra_config['floors'][4] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
 		rollPeriod: 1,
+		stepPlot: true,
 		showRoller: true,
 		legend: 'always',
 		axisLabelWidth: 30,
-		fillGraph: false,
-		ylabel: 'Busyness (1 - busy, 0 - free)',
+		fillGraph: true,
+		ylabel: 'Busyness: 1 - busy',
 		xlabel: 'Time',
-		digitsAfterDecimal: 2,
+		digitsAfterDecimal: 0,
 		showRangeSelector: true,
 		rangeSelectorHeight: 30,
 		visibility:[true,true,true,true]
@@ -62,7 +63,7 @@
 	  return true
 	}
 	</script>
-	<!--<script>
+	<script>
 	$(function() {
       var buttonpressed;
       $('.submitbutton').click(function() {
@@ -94,17 +95,18 @@
 			var divField = document.getElementById("dychart-chart");
 			var parameters = {
 		        labels: labels,
-		        rollPeriod: 1,
-		        showRoller: true,
-		        legend: 'always',
-		        axisLabelWidth: 30,
-		        fillGraph: false,
-		        ylabel: 'Busyness (1 - busy, 0 - free)',
-		        xlabel: 'Time',
-		        digitsAfterDecimal: 2,
-		        showRangeSelector: true,
-		        rangeSelectorHeight: 30,
-		        visibility:[true,true,true,true]
+		       	rollPeriod: 1,
+				stepPlot: true,
+				showRoller: true,
+				legend: 'always',
+				axisLabelWidth: 30,
+				fillGraph: true,
+				ylabel: 'Busyness: 1 - busy',
+				xlabel: 'Time',
+				digitsAfterDecimal: 0,
+				showRangeSelector: true,
+				rangeSelectorHeight: 30,
+				visibility:[true,true,true,true]
 	        }
 			console.log('xxx xxx xxx');
 			console.log(' ', divField, dataList, parameters);
@@ -117,6 +119,6 @@
 		});
 	  });
 	});
-	</script>-->
+	</script>
 	</body>
 </html>
