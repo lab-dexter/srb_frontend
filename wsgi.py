@@ -51,7 +51,7 @@ def get_ra_template_data(date=None):
     cur = db.cursor()
 #        cur.execute("""SELECT * FROM `sensor_data` WHERE timestamp < '2018-08-06 09:38:40' ORDER BY timestamp DESC LIMIT 200""")
     if date is None:
-        mysql_string = "SELECT * FROM `sensor_data` ORDER BY timestamp DESC LIMIT 200"
+        mysql_string = "SELECT * FROM `sensor_data` ORDER BY timestamp DESC LIMIT 100"
     else:
         mysql_string = "SELECT * FROM `sensor_data` WHERE timestamp > '{}' ORDER BY timestamp DESC".format(date)
     cur.execute(mysql_string)
@@ -67,7 +67,9 @@ def get_ra_template_data(date=None):
     for i in parsed_data:
         if len(parsed_data[i]) == 1:
             filtered_data.update({i: parsed_data[i]})
-    templateData['busyness_data'] = OrderedDict(sorted( filtered_data.items()))
+    dataDictionary = OrderedDict(sorted( filtered_data.items()))
+    templateData['status'] = next(reversed(dataDictionary))
+    templateData['busyness_data'] = dataDictionary
     return templateData
 
 def get_template_data(date=None):
