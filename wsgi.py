@@ -68,7 +68,7 @@ def get_ra_template_data(date=None):
         if len(parsed_data[i]) == 1:
             filtered_data.update({i: parsed_data[i]})
     dataDictionary = OrderedDict(sorted( filtered_data.items()))
-    templateData['status'] = next(reversed(dataDictionary))
+    templateData['status'] = dataDictionary.get(next(reversed(dataDictionary)))
     templateData['busyness_data'] = dataDictionary
     return templateData
 
