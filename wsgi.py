@@ -17,12 +17,12 @@ def index():
     return render_template('index.html', **templateData)
 
 @application.route("/ra")
-def ra_index():
+def ra():
     templateData = get_ra_template_data()
-    return render_template('ra_index.html', **templateData)
+    return render_template('roomavailability.html', **templateData)
 
 @application.route("/rs")
-def ra_index():
+def rs():
     templateData = get_ra_template_data()
     return render_template('roomstatus.html', **templateData)
 
