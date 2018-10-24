@@ -68,7 +68,7 @@ def get_ra_template_data(date=None):
         if len(parsed_data[i]) == 1:
             filtered_data.update({i: parsed_data[i]})
     dataDictionary = OrderedDict(sorted( filtered_data.items()))
-    templateData['status'] = dataDictionary.get(next(reversed(dataDictionary))).get(ra_config["floors"]["4"]["b8:27:eb:54:2c:38"]["data"])
+    templateData['status'] = dataDictionary.get(next(reversed(dataDictionary))).get(ra_config["floors"][4]["b8:27:eb:54:2c:38"]["data"])
     templateData['busyness_data'] = dataDictionary
     return templateData
 
