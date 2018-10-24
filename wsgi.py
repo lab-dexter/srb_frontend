@@ -49,7 +49,7 @@ def get_ra_template_data(date=None):
     dbname = "room-availability"
     db = MySQLdb.connect(host=dbhost, user=user, passwd=passwd, db=dbname)
     cur = db.cursor()
-    
+
     if date is None:
         mysql_string = "SELECT * FROM `sensor_data` ORDER BY timestamp DESC LIMIT 150"
     else:
@@ -69,7 +69,7 @@ def get_ra_template_data(date=None):
             filtered_data.update({i: parsed_data[i]})
     dataDictionary = OrderedDict(sorted( filtered_data.items()))
     # [4]['b8:27:eb:54:2c:38']['data']
-    templateData['status'] = dataDictionary.get(next(reversed(dataDictionary))) + " " + ra_config['floors']['4']
+    templateData['status'] = ra_config['floors']['4'] #dataDictionary.get(next(reversed(dataDictionary)))
     templateData['busyness_data'] = dataDictionary
     return templateData
 
