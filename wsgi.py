@@ -68,8 +68,10 @@ def get_ra_template_data(date=None):
         if len(parsed_data[i]) == 1:
             filtered_data.update({i: parsed_data[i]})
     dataDictionary = OrderedDict(sorted( filtered_data.items()))
-
-    templateData['status'] = dataDictionary.get(next(reversed(dataDictionary))).get('b8:27:eb:54:2c:38')#[0]).get('data')
+    if dataDictionary.get(next(reversed(dataDictionary))).get('b8:27:eb:54:2c:38').get('data') == "1.0":
+        templateData['status'] = "RoomIsBusy"
+    else:
+        templateData['status'] = "RoomIsFree"
     templateData['busyness_data'] = dataDictionary
     return templateData
 
