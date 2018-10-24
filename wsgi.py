@@ -7,8 +7,9 @@ from collections import OrderedDict
 import json
 
 application = Flask(__name__)
+sensorMac = "b8:27:eb:54:2c:38"
 config = { "floors": {4: { "ec:fa:bc:e:a6:95_1": "general" , "ec:fa:bc:e:a6:95_2": "general", "ec:fa:bc:e:a6:95_3": "glass", "ec:fa:bc:e:a6:95_4": "paper" }}}
-ra_config = { "floors": {4: { "b8:27:eb:54:2c:38": "general" }}}
+ra_config = { "floors": {4: { sensorMac : "general" }}}
 
 @application.route("/")
 def index():	
@@ -19,6 +20,11 @@ def index():
 def ra_index():
     templateData = get_ra_template_data()
     return render_template('ra_index.html', **templateData)
+
+@application.route("/rs")
+def ra_index():
+    templateData = get_ra_template_data()
+    return render_template('roomstatus.html', **templateData)
 
 @application.route('/date/', methods=['POST'])
 def get_graph_data():
@@ -65,10 +71,10 @@ def get_ra_template_data(date=None):
             parsed_data.update({ date_time: { mac_id: { "data": data }}})
     filtered_data = OrderedDict()
     for i in parsed_data:
-        if len(parsed_data[i]) == 1:
-            filtered_data.update({i: parsed_data[i]})
+       #if len(parsed_data[i]) == 1:
+        filtered_data.update({i: parsed_data[i]})
     dataDictionary = OrderedDict(sorted( filtered_data.items()))
-    if dataDictionary.get(next(reversed(dataDictionary))).get('b8:27:eb:54:2c:38').get('data') == 1.0:
+    if dataDictionary.get(next(reversed(dataDictionary))).get(sensorMac).get('data') == 1.0:
         templateData['status'] = "RoomIsBusy"
     else:
         templateData['status'] = "RoomIsFree"
