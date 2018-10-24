@@ -69,7 +69,7 @@ def get_ra_template_data(date=None):
             filtered_data.update({i: parsed_data[i]})
     dataDictionary = OrderedDict(sorted( filtered_data.items()))
 
-    templateData['status'] = (dataDictionary.get(next(reversed(dataDictionary))).get('b8:27:eb:54:2c:38')[0]).get('data')
+    templateData['status'] = dataDictionary.get(next(reversed(dataDictionary))).get('b8:27:eb:54:2c:38')#[0]).get('data')
     templateData['busyness_data'] = dataDictionary
     return templateData
 
