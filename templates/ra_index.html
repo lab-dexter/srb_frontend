@@ -1,27 +1,20 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Room Availability</title>
-    </head>
-    <body>
+{% extends "base.html" %}
+{% block title %}Room Availability{% endblock %}
+{% block head %}
+  {{ super() }}
 	<script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
-	<div><p>config -> {{ra_config }}</p></div>
-	<div id="status">Room status: {{status}}</div>
-	<div>dygraphs grafikas:</div>
+{% endblock %}
+{% block content %}
+    <div id="status"><p>Room status: {{status}}</p></div>
 	<div id="dychart-chart" style="width:900px; height:500px;"></div>
 	<p><b>Rodyti:</b></p>
     <div>
       <input type="checkbox" id="0" checked="" onclick="change(this)">
       <label for="0">b8:27:eb:54:2c:38</label>
-     <!-- <input type="checkbox" id="1" checked="" onclick="change(this)">
-      <label for="1">ec:fa:bc:e:a6:95_2</label>
-      <input type="checkbox" id="2" checked="" onclick="change(this)">
-      <label for="2">ec:fa:bc:e:a6:95_3</label>
-	  <input type="checkbox" id="3" checked="" onclick="change(this)">
-      <label for="3">ec:fa:bc:e:a6:95_4</label> -->
     </div>
+	<div><p>config -> {{ra_config }}</p></div>
 	<div>
 	<h1>Date Calculator</h1>
 	<form method="post" id="form">
@@ -124,5 +117,4 @@
 	  });
 	});
 	</script>
-	</body>
-</html>
+{% endblock %}
