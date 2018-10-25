@@ -28,13 +28,13 @@ def rs():
 
 def from_date(time_scale):
     if time_scale == "month":
-        min_date = datetime.now() - timedelta(days=48)
+        min_date = datetime.now() - timedelta(days=30)
     elif time_scale == "week":
-        min_date = datetime.now() - timedelta(days=25)
+        min_date = datetime.now() - timedelta(days=7)
     elif time_scale == "3_days":
-        min_date = datetime.now() - timedelta(days=21)
+        min_date = datetime.now() - timedelta(days=3)
     else:
-        min_date = datetime.now() - timedelta(days=19)
+        min_date = datetime.now() - timedelta(days=1)
     return min_date
 
 @application.route('/ra/date/', methods=['POST'])
