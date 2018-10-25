@@ -26,9 +26,7 @@ def rs():
     templateData = get_ra_template_data()
     return render_template('roomstatus.html', **templateData)
 
-@application.route('/date/', methods=['POST'])
-def get_graph_data():
-    time_scale = request.form.get("time_scale", "month")
+def from_date(time_scale):
     if time_scale == "month":
         min_date = datetime.now() - timedelta(days=48)
     elif time_scale == "week":
@@ -37,7 +35,20 @@ def get_graph_data():
         min_date = datetime.now() - timedelta(days=21)
     else:
         min_date = datetime.now() - timedelta(days=19)
-    data = get_template_data(min_date)
+    return min_date
+
+@application.route('/ra/date/', methods=['POST'])
+def get_ra_graph_data():
+    time_scale = request.form.get("time_scale", "month")
+    data = get_ra_template_data(from_date(time_scale))
+    data = {"time_scale": json.dumps(data)}
+    data = jsonify(data)
+    return data
+
+@application.route('/date/', methods=['POST'])
+def get_graph_data():
+    time_scale = request.form.get("time_scale", "month")
+    data = get_template_data(from_date(time_scale))
     data = {"time_scale": json.dumps(data)}
     data = jsonify(data)
     return data
@@ -57,7 +68,7 @@ def get_ra_template_data(date=None):
     cur = db.cursor()
 
     if date is None:
-        mysql_string = "SELECT * FROM `sensor_data` ORDER BY timestamp DESC LIMIT 150"
+        mysql_string = "SELECT * FROM `sensor_data` ORDER BY timestamp DESC LIMIT 20"
     else:
         mysql_string = "SELECT * FROM `sensor_data` WHERE timestamp > '{}' ORDER BY timestamp DESC".format(date)
     cur.execute(mysql_string)
