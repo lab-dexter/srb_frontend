@@ -8,23 +8,26 @@ import json
 
 application = Flask(__name__)
 sensorMac = "b8:27:eb:54:2c:38"
-config = { "floors": {4: { "ec:fa:bc:e:a6:95_1": "general" , "ec:fa:bc:e:a6:95_2": "general", "ec:fa:bc:e:a6:95_3": "glass", "ec:fa:bc:e:a6:95_4": "paper" }}}
-ra_config = { "floors": {4: { sensorMac : "general" }}}
+config = {"floors": {4: {"ec:fa:bc:e:a6:95_1": "general", "ec:fa:bc:e:a6:95_2": "general", "ec:fa:bc:e:a6:95_3": "glass", "ec:fa:bc:e:a6:95_4": "paper"}}}
+ra_config = {"floors": {4: {sensorMac: "general"}}}
 
 @application.route("/")
 def index():	
     templateData = get_template_data()
     return render_template('index.html', **templateData)
 
+
 @application.route("/ra")
 def ra():
     templateData = get_ra_template_data()
     return render_template('roomavailability.html', **templateData)
 
+
 @application.route("/rs")
 def rs():
     templateData = get_ra_template_data()
     return render_template('roomstatus.html', **templateData)
+
 
 def from_date(time_scale):
     if time_scale == "month":
@@ -37,6 +40,7 @@ def from_date(time_scale):
         min_date = datetime.now() - timedelta(days=1)
     return min_date
 
+
 @application.route('/ra/date/', methods=['POST'])
 def get_ra_graph_data():
     time_scale = request.form.get("time_scale", "month")
@@ -44,6 +48,7 @@ def get_ra_graph_data():
     data = {"time_scale": json.dumps(data)}
     data = jsonify(data)
     return data
+
 
 @application.route('/date/', methods=['POST'])
 def get_graph_data():
@@ -53,18 +58,19 @@ def get_graph_data():
     data = jsonify(data)
     return data
 
+
 @application.route('/static/<path:path>')
 def send_ota(path):
     return send_from_directory('static', path)
 
+
 def get_ra_template_data(date=None):
-    templateData = {}
-    templateData['ra_config'] = ra_config
+    template_data = {'ra_config': ra_config}
     user = "remote-admin"
     passwd = "Some-pass!23"
-    dbhost = os.environ["MYSQL_SERVICE_HOST"]
-    dbname = "room-availability"
-    db = MySQLdb.connect(host=dbhost, user=user, passwd=passwd, db=dbname)
+    db_host = os.environ["MYSQL_SERVICE_HOST"]
+    db_name = "room-availability"
+    db = MySQLdb.connect(host=db_host, user=user, passwd=passwd, db=db_name)
     cur = db.cursor()
 
     if date is None:
@@ -84,17 +90,17 @@ def get_ra_template_data(date=None):
     for i in parsed_data:
        #if len(parsed_data[i]) == 1:
         filtered_data.update({i: parsed_data[i]})
-    dataDictionary = OrderedDict(sorted( filtered_data.items()))
-    if dataDictionary.get(next(reversed(dataDictionary))).get(sensorMac).get('data') == 1.0:
-        templateData['status'] = "RoomIsBusy"
+    data_dictionary = OrderedDict(sorted(filtered_data.items()))
+    if data_dictionary.get(next(reversed(data_dictionary))).get(sensorMac).get('data') == 1.0:
+        template_data['status'] = "RoomIsBusy"
     else:
-        templateData['status'] = "RoomIsFree"
-    templateData['busyness_data'] = dataDictionary
-    return templateData
+        template_data['status'] = "RoomIsFree"
+    template_data['busyness_data'] = data_dictionary
+    return template_data
+
 
 def get_template_data(date=None):
-    templateData = {}
-    templateData['config'] = config
+    templateData = {'config': config}
     user = "remote-admin"
     passwd = "Some-pass!23"
     db_host = os.environ["MYSQL_SERVICE_HOST"]
@@ -118,9 +124,9 @@ def get_template_data(date=None):
             distance = fallback_values[mac_id]
         date_time = datetime_object.strftime("%Y-%m-%d %H:%M:%S")
         if date_time in parsed_data:
-            parsed_data[date_time].update({ mac_id: { "distance": distance }})
+            parsed_data[date_time].update({mac_id: {"distance": distance}})
         else:
-            parsed_data.update({ date_time: { mac_id: { "distance": distance }}})
+            parsed_data.update({date_time: {mac_id: {"distance": distance}}})
     filtered_data = OrderedDict()
     for i in parsed_data:
         if len(parsed_data[i]) == 4:
@@ -128,6 +134,7 @@ def get_template_data(date=None):
 
     templateData['distance_data'] = OrderedDict(sorted(filtered_data.items()))
     return templateData
-    
+
+
 if __name__ == "__main__":
     application.run(debug=True)
