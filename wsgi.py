@@ -72,9 +72,9 @@ def get_ra_template_data(date=None):
     else:
         mysql_string = "SELECT * FROM `sensor_data` WHERE timestamp > '{}' ORDER BY timestamp DESC".format(date)
     cur.execute(mysql_string)
-    dbdata = cur.fetchall()
+    db_data = cur.fetchall()
     parsed_data = OrderedDict()
-    for (id, mac_id, data, datetime_object) in dbdata:
+    for (id, mac_id, data, datetime_object) in db_data:
         date_time = datetime_object.strftime("%Y-%m-%d %H:%M:%S")
         if date_time in parsed_data:
             parsed_data[date_time].update({ mac_id: { "data": data }})
@@ -97,9 +97,9 @@ def get_template_data(date=None):
     templateData['config'] = config
     user = "remote-admin"
     passwd = "Some-pass!23"
-    dbhost = os.environ["MYSQL_SERVICE_HOST"]
-    dbname = "smart-recycling-bins"
-    db = MySQLdb.connect(host=dbhost, user=user, passwd=passwd, db=dbname)        
+    db_host = os.environ["MYSQL_SERVICE_HOST"]
+    db_name = "smart-recycling-bins"
+    db = MySQLdb.connect(host=db_host, user=user, passwd=passwd, db=db_name)
     cur = db.cursor()
 #        cur.execute("""SELECT * FROM `sensor_data` WHERE timestamp < '2018-08-06 09:38:40' ORDER BY timestamp DESC LIMIT 200""")
     if date is None:
@@ -109,7 +109,13 @@ def get_template_data(date=None):
     cur.execute(mysql_string)
     data = cur.fetchall()
     parsed_data = OrderedDict()
+    fallback_values = {}
     for (id, mac_id, distance, datetime_object) in data:
+        # if sensor reported value above 5 cm - record the value so we can fall back to last "good" one in case it's below 5
+        if distance > 5:
+            fallback_values[mac_id] = distance
+        else:
+            distance = fallback_values[mac_id]
         date_time = datetime_object.strftime("%Y-%m-%d %H:%M:%S")
         if date_time in parsed_data:
             parsed_data[date_time].update({ mac_id: { "distance": distance }})
@@ -119,6 +125,7 @@ def get_template_data(date=None):
     for i in parsed_data:
         if len(parsed_data[i]) == 4:
             filtered_data.update({i: parsed_data[i]})
+
     templateData['distance_data'] = OrderedDict(sorted(filtered_data.items()))
     return templateData
     
