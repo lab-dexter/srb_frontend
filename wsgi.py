@@ -32,7 +32,7 @@ def rs():
 def from_date(time_scale):
     # WIP: while sensors are offline, we are using old data
     # datetime_now = datetime.now()
-    datetime_now = datetime(2018, 9, 23, 9, 33, 35)
+    datetime_now = datetime(2018, 9, 23, 10, 13, 13)
     if time_scale == "month":
         min_date = datetime_now - timedelta(days=30)
     elif time_scale == "week":
