@@ -31,7 +31,7 @@
 g = new Dygraph(
 document.getElementById("dychart-chart"),
 [{% for i in distance_data %}
-    [new Date("{{ i }}"),{% for j in config['floors'][4] %}{{ distance_data[i][j]['distance'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
+    [new Date("{{ i }}"),{% for j in config['floors'][4] %}{{ distance_data[i][j]['trash_height'] }}{{ "," if not loop.last }}{% endfor %}]{{ "," if not loop.last }}{% endfor %}
 ],
 {
 	labels: ["data", {% for i in config['floors'][4] %}"{{ i }}"{{ ", " if not loop.last }}{% endfor %}],
@@ -40,7 +40,7 @@ document.getElementById("dychart-chart"),
 	legend: 'always',
 	axisLabelWidth: 30,
 	fillGraph: false,
-	ylabel: 'Distance (cm)',
+	ylabel: 'Height (cm)',
 	xlabel: 'Time',
 	digitsAfterDecimal: 2,
 	showRangeSelector: true,
@@ -83,7 +83,7 @@ $(function() {
 		for (i in obj.distance_data) {
             var tempList = [new Date(i)];
 			for (j in obj.config['floors'][4]) {
-			    tempList.push(obj.distance_data[i][j]['distance']);
+			    tempList.push(obj.distance_data[i][j]['trash_height']);
 			}
 			dataList.push(tempList);
         }
@@ -98,7 +98,7 @@ $(function() {
 	        legend: 'always',
 	        axisLabelWidth: 30,
 	        fillGraph: false,
-	        ylabel: 'Distance (cm)',
+	        ylabel: 'Height (cm)',
 	        xlabel: 'Time',
 	        digitsAfterDecimal: 2,
 	        showRangeSelector: true,

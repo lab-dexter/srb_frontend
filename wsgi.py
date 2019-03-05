@@ -8,7 +8,7 @@ import json
 
 application = Flask(__name__)
 sensorMac = "b8:27:eb:54:2c:38"
-config = {"floors": {4: {"ec:fa:bc:e:a6:95_1": "general", "ec:fa:bc:e:a6:95_2": "general", "ec:fa:bc:e:a6:95_3": "glass", "ec:fa:bc:e:a6:95_4": "paper"}}}
+config = {"height": 80, "floors": {4: {"ec:fa:bc:e:a6:95_1": "general", "ec:fa:bc:e:a6:95_2": "general", "ec:fa:bc:e:a6:95_3": "glass", "ec:fa:bc:e:a6:95_4": "paper"}}}
 ra_config = {"floors": {4: {sensorMac: "general"}}}
 
 @application.route("/")
@@ -86,9 +86,9 @@ def get_ra_template_data(date=None):
     for (id, mac_id, data, datetime_object) in db_data:
         date_time = datetime_object.strftime("%Y-%m-%d %H:%M:%S")
         if date_time in parsed_data:
-            parsed_data[date_time].update({ mac_id: { "data": data }})
+            parsed_data[date_time].update({mac_id: {"data": data}})
         else:
-            parsed_data.update({ date_time: { mac_id: { "data": data }}})
+            parsed_data.update({ date_time: {mac_id: {"data": data}}})
     filtered_data = OrderedDict()
     for i in parsed_data:
        #if len(parsed_data[i]) == 1:
@@ -106,6 +106,7 @@ def get_template_data(date=None):
     templateData = {'config': config}
     user = "remote-admin"
     passwd = "Some-pass!23"
+    bin_height = config["height"]
     db_host = os.environ["MYSQL_SERVICE_HOST"]
     db_name = "smart-recycling-bins"
     db = MySQLdb.connect(host=db_host, user=user, passwd=passwd, db=db_name)
@@ -125,11 +126,16 @@ def get_template_data(date=None):
             fallback_values[mac_id] = distance
         else:
             distance = fallback_values[mac_id]
+
         date_time = datetime_object.strftime("%Y-%m-%d %H:%M:%S")
+        # reserve the height with bin height from config
+        trash_height = bin_height - distance
+        if distance < 0:
+            distance = 0
         if date_time in parsed_data:
-            parsed_data[date_time].update({mac_id: {"distance": distance}})
+            parsed_data[date_time].update({mac_id: {"trash_height": trash_height}})
         else:
-            parsed_data.update({date_time: {mac_id: {"distance": distance}}})
+            parsed_data.update({date_time: {mac_id: {"trash_height": trash_height}}})
     filtered_data = OrderedDict()
     for i in parsed_data:
         if len(parsed_data[i]) == 4:
