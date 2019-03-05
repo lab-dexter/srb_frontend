@@ -130,8 +130,8 @@ def get_template_data(date=None):
         date_time = datetime_object.strftime("%Y-%m-%d %H:%M:%S")
         # reserve the height with bin height from config
         trash_height = bin_height - distance
-        if distance < 0:
-            distance = 0
+        if trash_height < 0:
+            trash_height = 0
         if date_time in parsed_data:
             parsed_data[date_time].update({mac_id: {"trash_height": trash_height}})
         else:
