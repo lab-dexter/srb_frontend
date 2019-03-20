@@ -111,11 +111,11 @@ def get_template_data(date=None):
     db = MySQLdb.connect(host=db_host, user=user, passwd=passwd, db=db_name)
     cur = db.cursor()
 #        cur.execute("""SELECT * FROM `sensor_data` WHERE timestamp < '2018-08-06 09:38:40' ORDER BY timestamp DESC LIMIT 200""")
-    mac_ids = "({})".format(",".join(config['floors'][4].keys()))
+    mac_ids = "('{}')".format("','".join(config['floors'][4].keys()))
     if date is None:
-        mysql_string = "SELECT * FROM `sensor_data` WHERE `macid` IN '{}' ORDER BY timestamp DESC LIMIT 1000".format(mac_ids)
+        mysql_string = "SELECT * FROM `sensor_data` WHERE `macid` IN {} ORDER BY timestamp DESC LIMIT 1000".format(mac_ids)
     else:
-        mysql_string = "SELECT * FROM `sensor_data` WHERE timestamp > '{}' AND `macid` IN '{}' ORDER BY timestamp DESC".format(date, mac_ids)
+        mysql_string = "SELECT * FROM `sensor_data` WHERE timestamp > '{}' AND `macid` IN {} ORDER BY timestamp DESC".format(date, mac_ids)
     cur.execute(mysql_string)
     data = cur.fetchall()
     parsed_data = OrderedDict()
