@@ -158,7 +158,7 @@ def db_records():
     data = list(cur.fetchall())
     parsed_data = []
     for (id, mac_id, distance, datetime_object) in data:
-        parsed_data.append(id, mac_id, distance, datetime_object.strftime("%Y-%m-%d %H:%M:%S"))
+        parsed_data.append((id, mac_id, distance, datetime_object.strftime("%Y-%m-%d %H:%M:%S")))
     return render_template('db.html', data=parsed_data)
 
 
