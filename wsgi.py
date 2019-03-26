@@ -156,7 +156,10 @@ def db_records():
     mysql_string = "SELECT * FROM (SELECT * FROM `sensor_data` ORDER BY id DESC LIMIT 100) sub ORDER BY id DESC"
     cur.execute(mysql_string)
     data = list(cur.fetchall())
-    return render_template('db.html', data=data)
+    parsed_data = []
+    for (id, mac_id, distance, datetime_object) in data:
+        parsed_data.append(id, mac_id, distance, datetime_object.strftime("%Y-%m-%d %H:%M:%S"))
+    return render_template('db.html', data=parsed_data)
 
 
 if __name__ == "__main__":
