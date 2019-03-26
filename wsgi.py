@@ -151,6 +151,8 @@ def db_records():
     passwd = "Some-pass!23"
     db_host = os.environ["MYSQL_SERVICE_HOST"]
     db_name = "smart-recycling-bins"
+    db = MySQLdb.connect(host=db_host, user=user, passwd=passwd, db=db_name)
+    cur = db.cursor()
     return render_template('db.html')
 
 
