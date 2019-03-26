@@ -156,7 +156,7 @@ def db_records():
     mysql_string = "SELECT * FROM `sensor_data` ORDER BY timestamp DESC LIMIT 100"
     cur.execute(mysql_string)
     data = cur.fetchall()
-    data.sort(key=lambda tup: tup[1], reverse=True)
+    data.sort(key=lambda tup: tup[1])
     return render_template('db.html', data=data)
 
 
