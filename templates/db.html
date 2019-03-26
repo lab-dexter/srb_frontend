@@ -5,8 +5,8 @@
 {% endblock %}
 {% block content %}
 <div>Last 100 records in DB:</div>
-<p><b>Rodyti:</b></p>
-{% for line in data %}
-    <p>{{ line }} </p>
+<p><b>id macid distance datetime</b></p>
+{% for line in parsed_data %}
+    <p> {{ line }} </p>
 {% endfor %}
 {% endblock %}
