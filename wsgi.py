@@ -161,7 +161,7 @@ def db_records():
         parsed_data.append((id, mac_id, distance, datetime_object))
     parsed_data = jsonify(parsed_data)
     parsed_data["labas"] = data
-    return render_template('db.html', **parsed_data)
+    return render_template('db.html', data=parsed_data)
 
 
 if __name__ == "__main__":
