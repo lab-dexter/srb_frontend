@@ -156,12 +156,7 @@ def db_records():
     mysql_string = "SELECT * FROM `sensor_data` ORDER BY timestamp DESC LIMIT 100"
     cur.execute(mysql_string)
     data = cur.fetchall()
-    parsed_data = []
-    for (id, mac_id, distance, datetime_object) in data:
-        parsed_data.append((id, mac_id, distance, datetime_object))
-    parsed_data = jsonify(parsed_data)
-    parsed_data["labas"] = data
-    return render_template('db.html', data=parsed_data)
+    return render_template('db.html')
 
 
 if __name__ == "__main__":
