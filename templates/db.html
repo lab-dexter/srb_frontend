@@ -5,8 +5,8 @@
 {% endblock %}
 {% block content %}
 <div>Last 100 records in DB:</div>
-<p><b>id macid distance datetime</b></p>
+<p><b>id &nbsp;&nbsp;&nbsp;&nbsp; macid &nbsp;&nbsp;&nbsp;&nbsp; distance &nbsp;&nbsp;&nbsp;&nbsp; datetime</b></p>
 {% for record in data %}
-    <p> {{ record }} </p>
+    <p>{{ record[0]}} &nbsp;&nbsp;&nbsp;&nbsp; {{ record[1] }} &nbsp;&nbsp;&nbsp;&nbsp; {{ record[2] }} &nbsp;&nbsp;&nbsp;&nbsp; {{ record[3] }}</p>
 {% endfor %}
 {% endblock %}
