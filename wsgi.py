@@ -147,6 +147,10 @@ def get_template_data(date=None):
 
 @application.route("/db")
 def db_records():
+    user = "remote-admin"
+    passwd = "Some-pass!23"
+    db_host = os.environ["MYSQL_SERVICE_HOST"]
+    db_name = "smart-recycling-bins"
     return render_template('db.html')
 
 
