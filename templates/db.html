@@ -5,8 +5,20 @@
 {% endblock %}
 {% block content %}
 <div>Last 100 records in DB:</div>
-<p><b>id &nbsp;&nbsp;&nbsp;&nbsp; macid &nbsp;&nbsp;&nbsp;&nbsp; distance &nbsp;&nbsp;&nbsp;&nbsp; datetime</b></p>
-{% for record in data %}
-    <p>{{ record[0]}} &nbsp;&nbsp;&nbsp;&nbsp; {{ record[1] }} &nbsp;&nbsp;&nbsp;&nbsp; {{ record[2] }} &nbsp;&nbsp;&nbsp;&nbsp; {{ record[3] }}</p>
-{% endfor %}
+    <table style="width:100%">
+        <tr>
+            <th>id</th>
+            <th>mac_id</th>
+            <th>distance</th>
+            <th>date time</th>
+        </tr>
+        {% for record in data %}
+        <tr>
+            <td>{{ record[0]}}</td>
+            <td>{{ record[1] }}</td>
+            <td>{{ record[2] }}</td>
+            <td>{{ record[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
