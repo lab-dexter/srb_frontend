@@ -158,7 +158,9 @@ def db_records():
     data = cur.fetchall()
     parsed_data = []
     for (id, mac_id, distance, datetime_object) in data:
-        parsed_data.append(id, mac_id, distance, datetime_object)
+        parsed_data.append((id, mac_id, distance, datetime_object))
+    parsed_data = jsonify(parsed_data)
+    parsed_data["labas"] = data
     return render_template('db.html', **parsed_data)
 
 
