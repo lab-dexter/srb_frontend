@@ -153,6 +153,8 @@ def db_records():
     db_name = "smart-recycling-bins"
     db = MySQLdb.connect(host=db_host, user=user, passwd=passwd, db=db_name)
     cur = db.cursor()
+    mysql_string = "SELECT * FROM `sensor_data` ORDER BY timestamp DESC LIMIT 100"
+    cur.execute(mysql_string)
     return render_template('db.html')
 
 
