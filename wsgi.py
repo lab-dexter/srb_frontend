@@ -5,7 +5,6 @@ import os
 from datetime import datetime, timedelta
 from collections import OrderedDict
 import json
-from operator import itemgetter
 
 application = Flask(__name__)
 sensorMac = "b8:27:eb:54:2c:38"
@@ -154,10 +153,9 @@ def db_records():
     db_name = "smart-recycling-bins"
     db = MySQLdb.connect(host=db_host, user=user, passwd=passwd, db=db_name)
     cur = db.cursor()
-    mysql_string = "SELECT * FROM (SELECT * FROM `sensor_data` ORDER BY id DESC LIMIT 100) sub ORDER BY id ASC"
+    mysql_string = "SELECT * FROM (SELECT * FROM `sensor_data` ORDER BY id DESC LIMIT 100) sub ORDER BY id DESC"
     cur.execute(mysql_string)
     data = list(cur.fetchall())
-#    data.sort(key=itemgetter(1), reverse=True)
     return render_template('db.html', data=data)
 
 
